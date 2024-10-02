@@ -60,10 +60,10 @@ module.exports = {
     }
   },
 
-  // Delete a user and remove them from the course
+  // Delete a user and all associated thoughts
   async deleteUser(req, res) {
     try {
-      const user = await User.findOneAndRemove({ _id: req.params.userId });
+      const user = await User.findOneAndDelete({ _id: req.params.userId });
 
       if (!user) {
         return res.status(404).json({ message: 'No such user exists' });
@@ -89,8 +89,8 @@ module.exports = {
     try {
     const user = await User.findOneAndUpdate(
       { _id: req.params.userId },
-      { $addToSet: { friends: ObjectId(req.body.friends) } },
-      { runValidators: true, new: true }
+      { $addToSet: { friends: new ObjectId(req.body.friend) } },
+      { new: true }
     );
       
       if (!user) {
@@ -108,7 +108,7 @@ module.exports = {
     try {
       const user = await User.findOneAndUpdate(
         { _id: req.params.userId },
-        { $pull: { friends: ObjectId(req.params.friendId) } },
+        { $pull: { friends: new ObjectId(req.params.friendId) } },
         { runValidators: true, new: true }
       );
 
