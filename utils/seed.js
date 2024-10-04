@@ -47,7 +47,7 @@ connection.once('open', async () => {
   for (const user of createdUsers) {
     const friends = createdUsers
       .filter(u => u._id.toString() !== user._id.toString()) 
-      .map(u => u._id) // Get their _id
+      .map(u => u._id) 
       .sort(() => 0.5 - Math.random()) 
       .slice(0, Math.floor(Math.random() * createdUsers.length)); 
 

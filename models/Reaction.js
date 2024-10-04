@@ -1,5 +1,15 @@
 const { Schema, Types } = require('mongoose');
 
+const formatDate = (timestamp) => {
+  const date = new Date(timestamp);
+  return `${date.getDate().toString().padStart(2, '0')}-${(date.getMonth() + 1)
+    .toString()
+    .padStart(2, '0')}-${date.getFullYear()} ${date
+    .getHours()
+    .toString()
+    .padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
+};
+
 const reactionSchema = new Schema(
   {
     reactionId: {
@@ -18,7 +28,7 @@ const reactionSchema = new Schema(
     createAt: {
       type: Date,
       default: Date.now(),
-      get: (timestamp) => new Date(timestamp).toLocaleString(),
+      get: (timestamp) => formatDate(timestamp),
     },
   },
   {
